@@ -1,0 +1,142 @@
+SELECT
+    *
+FROM
+    USERS
+WHERE
+    NAME LIKE 'i%';
+
+CREATE TABLE DEPT (
+    DEPT_ID   INT PRIMARY KEY,
+    DEPT_NAME VARCHAR(50),
+    DEPT_LOC  VARCHAR(25)
+)
+
+CREATE TABLE EMP (
+    E_ID    INT PRIMARY KEY,
+    E_NAME  VARCHAR(50),
+    DEPT_ID INT,
+    SALARY  DECIMAL(8, 2),
+    FOREIGN KEY ( DEPT_ID )
+        REFERENCES DEPT ( DEPT_ID )
+)
+
+SELECT
+    *
+FROM
+    EMP;
+
+SELECT
+    *
+FROM
+    DEPT;
+
+BEGIN
+    INSERT INTO DEPT VALUES ( 1,
+                              'IT',
+                              'A-wing' );
+
+    INSERT INTO DEPT VALUES ( 2,
+                              'CS',
+                              'B-wing' );
+
+    INSERT INTO DEPT VALUES ( 3,
+                              'Production',
+                              'C-wing' );
+
+    INSERT INTO DEPT VALUES ( 4,
+                              'HR',
+                              'H-wing' );
+
+    INSERT INTO DEPT VALUES ( 5,
+                              'Sales',
+                              'D-wing' );
+
+END;
+
+BEGIN
+    INSERT INTO EMP VALUES ( 101,
+                             'jenny',
+                             1,
+                             35000 );
+
+    INSERT INTO EMP VALUES ( 102,
+                             'ram',
+                             4,
+                             20000 );
+
+    INSERT INTO EMP VALUES ( 103,
+                             'sarika',
+                             1,
+                             12000 );
+
+    INSERT INTO EMP VALUES ( 104,
+                             'naman',
+                             5,
+                             65000 );
+
+    INSERT INTO EMP VALUES ( 105,
+                             'rajan',
+                             3,
+                             31000 );
+
+    INSERT INTO EMP VALUES ( 106,
+                             'anika',
+                             4,
+                             24000 );
+
+END;
+
+SELECT
+    COUNT(E_ID)
+FROM
+    EMP;
+
+SELECT DISTINCT
+    ( DEPT_ID )
+FROM
+    DEPT;
+
+SELECT
+    SUM(SALARY)
+FROM
+    EMP;
+
+SELECT
+    AVG(SALARY) AS AVERAGE_SALARY
+FROM
+    EMP;
+
+    select dept_id,count(e_id)
+    from Emp
+    group by dept_id 
+    having count(e_id)>=2;
+
+    select dept_id,count(e_id)
+    from Emp
+    where e_id IN (101,103)
+    group by dept_id
+    having count(e_id)>=2  
+
+    select * from EMP
+    where dept_id=(select dept_id from Dept
+    where dept_name='HR');
+
+    select * from EMP
+    where dept_id In(select dept_id from Dept
+    where dept_name IN('IT','CS'));
+
+    select * from Emp
+    where salary=(select max(salary) from Emp );
+
+    select e_name from Emp
+    where dept_id in(select dept_id from Dept 
+    where dept_loc='H-wing');
+
+   SELECT e_name, dept_name
+FROM Emp
+INNER JOIN Dept
+ON Emp.dept_id = Dept.dept_id;
+
+select e.e_name,d.dept_name
+from Emp  e inner join Dept  d
+on e.dept_id=d.dept_id;
